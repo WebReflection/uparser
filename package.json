@@ -1,6 +1,6 @@
 {
   "name": "uparser",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "The uhtml template parser",
   "main": "./cjs/index.js",
   "scripts": {
