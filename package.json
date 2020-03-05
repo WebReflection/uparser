@@ -38,5 +38,13 @@
     "import": "./esm/index.js",
     "default": "./cjs/index.js"
   },
-  "unpkg": "min.js"
+  "unpkg": "min.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebReflection/uparser.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WebReflection/uparser/issues"
+  },
+  "homepage": "https://github.com/WebReflection/uparser#readme"
 }
