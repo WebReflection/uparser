@@ -1,4 +1,4 @@
-# µparser
+# <em>µ</em>parser
 
 [![Build Status](https://travis-ci.com/WebReflection/uparser.svg?branch=master)](https://travis-ci.com/WebReflection/uparser) [![Coverage Status](https://coveralls.io/repos/github/WebReflection/uparser/badge.svg?branch=master)](https://coveralls.io/github/WebReflection/uparser?branch=master)
 
