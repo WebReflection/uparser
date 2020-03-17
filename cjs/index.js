@@ -20,7 +20,7 @@ const isNode = (template, i) => {
 const regular = (original, name, extra) => empty.test(name) ?
                   original : `<${name}${extra.replace(trimEnd,'')}></${name}>`;
 
-module.exports = (template, prefix) => {
+module.exports = (template, prefix, svg) => {
   const text = [];
   for (let i = 0, {length} = template; i < length; i++) {
     const chunk = template[i];
@@ -32,5 +32,6 @@ module.exports = (template, prefix) => {
     else
       text.push(chunk);
   }
-  return text.join('').trim().replace(selfClosing, regular);
+  const output = text.join('').trim();
+  return svg ? output : output.replace(selfClosing, regular);
 };

@@ -22,7 +22,7 @@ var uparser = (function (exports) {
     return empty.test(name) ? original : "<".concat(name).concat(extra.replace(trimEnd, ''), "></").concat(name, ">");
   };
 
-  var index = (function (template, prefix) {
+  var index = (function (template, prefix, svg) {
     var text = [];
 
     var _loop = function _loop(i, length) {
@@ -36,7 +36,8 @@ var uparser = (function (exports) {
       _loop(i, length);
     }
 
-    return text.join('').trim().replace(selfClosing, regular);
+    var output = text.join('').trim();
+    return svg ? output : output.replace(selfClosing, regular);
   });
 
   exports.default = index;
