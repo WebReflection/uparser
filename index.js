@@ -9,13 +9,7 @@ var uparser = (function (exports) {
   var trimEnd = /\s+$/;
 
   var isNode = function isNode(template, i) {
-    while (i--) {
-      var chunk = template[i];
-      if (node.test(chunk)) return true;
-      if (notNode.test(chunk)) return false;
-    }
-
-    return false;
+    return 0 < i-- && (node.test(template[i]) || !notNode.test(template[i]) && isNode(template, i));
   };
 
   var regular = function regular(original, name, extra) {
@@ -23,17 +17,14 @@ var uparser = (function (exports) {
   };
 
   var index = (function (template, prefix, svg) {
-    var text = [];
+    var i = template.length;
+    var text = [template[--i]];
 
-    var _loop = function _loop(i, length) {
-      var chunk = template[i];
-      if (attr.test(chunk) && isNode(template, i + 1)) text.push(chunk.replace(attr, function (_, $1, $2) {
-        return "".concat(prefix).concat(i, "=").concat($2 ? $2 : '"').concat($1).concat($2 ? '' : '"');
-      }));else if (i + 1 < length) text.push(chunk, "<!--".concat(prefix).concat(i, "-->"));else text.push(chunk);
-    };
-
-    for (var i = 0, length = template.length; i < length; i++) {
-      _loop(i, length);
+    while (i) {
+      var chunk = template[--i];
+      if (attr.test(chunk) && isNode(template, i + 1)) text.unshift(chunk.replace(attr, function (_, $1, $2) {
+        return "".concat(prefix).concat(i, "=").concat($2 || '"').concat($1).concat($2 ? '' : '"');
+      }));else text.unshift(chunk, "<!--".concat(prefix).concat(i, "-->"));
     }
 
     var output = text.join('').trim();
