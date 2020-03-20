@@ -5,32 +5,31 @@ const notNode = />[^<>]*$/;
 const selfClosing = /<([a-z]+[a-z0-9:._-]*)([^>]*?)(\/>)/ig;
 const trimEnd = /\s+$/;
 
-const isNode = (template, i) => {
-  while (i--) {
-    const chunk = template[i];
-    if (node.test(chunk))
-      return true;
-    if (notNode.test(chunk))
-      return false;
-  }
-  return false;
-};
+const isNode = (template, i) => (
+    0 < i-- && (
+    node.test(template[i]) || (
+      !notNode.test(template[i]) && isNode(template, i)
+    )
+  )
+);
 
 const regular = (original, name, extra) => empty.test(name) ?
                   original : `<${name}${extra.replace(trimEnd,'')}></${name}>`;
 
 export default (template, prefix, svg) => {
   const text = [];
-  for (let i = 0, {length} = template; i < length; i++) {
-    const chunk = template[i];
-    if (attr.test(chunk) && isNode(template, i + 1))
-      text.push(chunk.replace(attr, (_, $1, $2) =>
-        `${prefix}${i}=${$2 ? $2 : '"'}${$1}${$2 ? '' : '"'}`));
-    else if ((i + 1) < length)
-      text.push(chunk, `<!--${prefix}${i}-->`);
-    else
-      text.push(chunk);
+  const {length} = template;
+  for (let i = 1; i < length; i++) {
+    const chunk = template[i - 1];
+    text.push(attr.test(chunk) && isNode(template, i) ?
+      chunk.replace(
+        attr,
+        (_, $1, $2) => `${prefix}${i - 1}=${$2 || '"'}${$1}${$2 ? '' : '"'}`
+      ) :
+      `${chunk}<!--${prefix}${i - 1}-->`
+    );
   }
+  text.push(template[length - 1]);
   const output = text.join('').trim();
   return svg ? output : output.replace(selfClosing, regular);
 };
