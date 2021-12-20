@@ -36,8 +36,10 @@ var uparser = (function (exports) {
     return svg ? output : output.replace(selfClosing, regular);
   });
 
-  exports.default = index;
+  exports["default"] = index;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
 
   return exports;
 
-}({}).default);
+})({}).default;
