@@ -19,6 +19,7 @@ export default (template, prefix, svg) => {
   let i = 0;
   return template
           .join('\x01')
+          .trim()
           .replace(
             elements,
             (_, name, attrs, selfClosing) => {

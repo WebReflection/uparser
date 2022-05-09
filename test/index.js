@@ -4,6 +4,9 @@ const expect = (comp, result) => {
   console.assert(comp === result, `expected "${result}" but got "${comp}"`);
 };
 
+expect(parse([`
+  <div />
+`], '!'), '<div></div>');
 expect(parse(['<div />'], '!'), '<div></div>');
 expect(parse(['<div />'], '!', true), '<div />');
 expect(parse(['<div test="', '" />'], '!'), '<div !0="test"></div>');
