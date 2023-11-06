@@ -3,15 +3,10 @@ import {nodeResolve} from '@rollup/plugin-node-resolve';
 export default {
   input: './esm/index.js',
   plugins: [
-    
-    nodeResolve()
+    nodeResolve(),
   ],
-  
   output: {
-    esModule: false,
-    exports: 'named',
+    esModule: true,
     file: './index.js',
-    format: 'iife',
-    name: 'uparser'
   }
 };
