@@ -5,7 +5,7 @@
 The _[µhtml](https://github.com/WebReflection/uhtml#readme)_ and _[µcontent](https://github.com/WebReflection/ucontent#readme)_ template parser.
 
 ```js
-import parse from 'uparser';
+import parse from '@webreflection/uparser';
 
 const html = template => parse(template, 'secret', false);
 const svg = template => parse(template, 'secret', true);
