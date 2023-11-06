@@ -1,6 +1,7 @@
 'use strict';
 /*! (c) Andrea Giammarchi - ISC */
-const empty = /^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i;
+const { VOID_ELEMENTS } = require('domconstants');
+
 const elements = /<([a-zA-Z0-9]+[a-zA-Z0-9:._-]*)([^>]*?)(\/?)>/g;
 const attributes = /([^\s\\>"'=]+)\s*=\s*(['"]?)\x01/g;
 const holes = /[\x01\x02]/g;
@@ -26,7 +27,7 @@ module.exports = (template, prefix, xml) => {
             (_, name, attrs, selfClosing) => {
               let ml = name + attrs.replace(attributes, '\x02=$2$1').trimEnd();
               if (selfClosing.length)
-                ml += (xml || empty.test(name)) ? ' /' : ('></' + name);
+                ml += (xml || VOID_ELEMENTS.test(name)) ? ' /' : ('></' + name);
               return '<' + ml + '>';
             }
           )
