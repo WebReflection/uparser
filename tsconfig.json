@@ -1,14 +1,16 @@
 {
     "compilerOptions": {
-        "module": "ES2022",
-        "target": "ES2022",
-        "moduleResolution": "Classic",
+        "module": "NodeNext",
+        "target": "esnext",
+        "moduleResolution": "nodenext",
         "allowJs": true,
         "declaration": true,
         "emitDeclarationOnly": true,
         "declarationDir": "types"
     },
     "include": [
-        "esm/index.js"
+        "esm/index.js",
+        "esm/exports.js",
+        "esm/xworker.js"
     ]
 }
