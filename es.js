@@ -1,3 +1,2 @@
-/*! (c) Andrea Giammarchi - ISC */
-const e=/^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i,r=/<([a-zA-Z0-9]+[a-zA-Z0-9:._-]*)([^>]*?)(\/?)>/g,t=/([^\s\\>"'=]+)\s*=\s*(['"]?)\x01/g,a=/[\x01\x02]/g;
-/*! (c) Andrea Giammarchi - ISC */var n=(n,l,c)=>{let i=0;return n.join("").trim().replace(r,((r,a,n,l)=>{let i=a+n.replace(t,"=$2$1").trimEnd();return l.length&&(i+=c||e.test(a)?" /":"></"+a),"<"+i+">"})).replace(a,(e=>""===e?"\x3c!--"+l+i+++"--\x3e":l+i++))};export{n as default};
+var e=(e=>{const r=new Set;for(let a=0;a<e.length;a++)r.add(e[a]),r.add(e[a].toUpperCase());return r})(["area","base","br","col","embed","hr","img","input","keygen","link","menuitem","meta","param","source","track","wbr"]);
+/*! (c) Andrea Giammarchi - ISC */const r=/<([a-zA-Z0-9]+[a-zA-Z0-9:._-]*)([^>]*?)(\/?)>/g,a=/([^\s\\>"'=]+)\s*=\s*(['"]?)\x01/g,t=/[\x01\x02]/g;var n=(n,s,c)=>{let l=0;return n.join("").trim().replace(r,((r,t,n,s)=>`<${t}${n.replace(a,"=$2$1").trimEnd()}${s?c||e.has(t)?" /":`></${t}`:""}>`)).replace(t,(e=>""===e?`\x3c!--${s+l++}--\x3e`:s+l++))};export{n as default};

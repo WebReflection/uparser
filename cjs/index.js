@@ -1,6 +1,6 @@
 'use strict';
 /*! (c) Andrea Giammarchi - ISC */
-const { VOID_ELEMENTS } = require('domconstants');
+const VOID_SET = (m => /* c8 ignore start */ m.__esModule ? m.default : m /* c8 ignore stop */)(require('domconstants/void'));
 
 const elements = /<([a-zA-Z0-9]+[a-zA-Z0-9:._-]*)([^>]*?)(\/?)>/g;
 const attributes = /([^\s\\>"'=]+)\s*=\s*(['"]?)\x01/g;
@@ -20,21 +20,23 @@ const holes = /[\x01\x02]/g;
 module.exports = (template, prefix, xml) => {
   let i = 0;
   return template
-          .join('\x01')
-          .trim()
-          .replace(
-            elements,
-            (_, name, attrs, selfClosing) => {
-              let ml = name + attrs.replace(attributes, '\x02=$2$1').trimEnd();
-              if (selfClosing.length)
-                ml += (xml || VOID_ELEMENTS.test(name)) ? ' /' : ('></' + name);
-              return '<' + ml + '>';
-            }
-          )
-          .replace(
-            holes,
-            hole => hole === '\x01' ?
-              ('<!--' + prefix + i++ + '-->') :
-              (prefix + i++)
-          );
+    .join('\x01')
+    .trim()
+    .replace(
+      elements,
+      (_, name, attrs, selfClosing) => `<${
+          name
+        }${
+          attrs.replace(attributes, '\x02=$2$1').trimEnd()
+        }${
+          selfClosing ? (
+            (xml || VOID_SET.has(name)) ? ' /' : `></${name}`
+          ) : ''
+        }>`
+    )
+    .replace(
+      holes,
+      hole => hole === '\x01' ? `<!--${prefix + i++}-->` : (prefix + i++)
+    )
+  ;
 };

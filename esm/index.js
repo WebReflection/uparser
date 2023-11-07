@@ -1,5 +1,5 @@
 /*! (c) Andrea Giammarchi - ISC */
-import { VOID_ELEMENTS } from 'domconstants';
+import VOID_SET from 'domconstants/void';
 
 const elements = /<([a-zA-Z0-9]+[a-zA-Z0-9:._-]*)([^>]*?)(\/?)>/g;
 const attributes = /([^\s\\>"'=]+)\s*=\s*(['"]?)\x01/g;
@@ -19,21 +19,23 @@ const holes = /[\x01\x02]/g;
 export default (template, prefix, xml) => {
   let i = 0;
   return template
-          .join('\x01')
-          .trim()
-          .replace(
-            elements,
-            (_, name, attrs, selfClosing) => {
-              let ml = name + attrs.replace(attributes, '\x02=$2$1').trimEnd();
-              if (selfClosing.length)
-                ml += (xml || VOID_ELEMENTS.test(name)) ? ' /' : ('></' + name);
-              return '<' + ml + '>';
-            }
-          )
-          .replace(
-            holes,
-            hole => hole === '\x01' ?
-              ('<!--' + prefix + i++ + '-->') :
-              (prefix + i++)
-          );
+    .join('\x01')
+    .trim()
+    .replace(
+      elements,
+      (_, name, attrs, selfClosing) => `<${
+          name
+        }${
+          attrs.replace(attributes, '\x02=$2$1').trimEnd()
+        }${
+          selfClosing ? (
+            (xml || VOID_SET.has(name)) ? ' /' : `></${name}`
+          ) : ''
+        }>`
+    )
+    .replace(
+      holes,
+      hole => hole === '\x01' ? `<!--${prefix + i++}-->` : (prefix + i++)
+    )
+  ;
 };
