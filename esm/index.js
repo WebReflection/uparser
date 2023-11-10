@@ -1,5 +1,5 @@
 /*! (c) Andrea Giammarchi - ISC */
-import VOID_SET from 'domconstants/void';
+import { VOID_ELEMENTS } from 'domconstants/re';
 
 const elements = /<([a-zA-Z0-9]+[a-zA-Z0-9:._-]*)([^>]*?)(\/?)>/g;
 const attributes = /([^\s\\>"'=]+)\s*=\s*(['"]?)\x01/g;
@@ -29,7 +29,7 @@ export default (template, prefix, xml) => {
           attrs.replace(attributes, '\x02=$2$1').trimEnd()
         }${
           selfClosing ? (
-            (xml || VOID_SET.has(name)) ? ' /' : `></${name}`
+            (xml || VOID_ELEMENTS.test(name)) ? ' /' : `></${name}`
           ) : ''
         }>`
     )

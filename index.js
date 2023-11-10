@@ -1,35 +1,4 @@
-/**
- * @template T
- * @param {T[]} list
- * @returns {Set<T>}
- */
-const set = list => {
-  const result = new Set;
-  for (let i = 0; i < list.length; i++) {
-    result.add(list[i]);
-    result.add(list[i].toUpperCase());
-  }
-  return result;
-};
-
-var VOID_SET = set([
-  'area',
-  'base',
-  'br',
-  'col',
-  'embed',
-  'hr',
-  'img',
-  'input',
-  'keygen',
-  'link',
-  'menuitem',
-  'meta',
-  'param',
-  'source',
-  'track',
-  'wbr',
-]);
+const VOID_ELEMENTS = /^(?:area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/i;
 
 /*! (c) Andrea Giammarchi - ISC */
 
@@ -61,7 +30,7 @@ var index = (template, prefix, xml) => {
           attrs.replace(attributes, '\x02=$2$1').trimEnd()
         }${
           selfClosing ? (
-            (xml || VOID_SET.has(name)) ? ' /' : `></${name}`
+            (xml || VOID_ELEMENTS.test(name)) ? ' /' : `></${name}`
           ) : ''
         }>`
     )

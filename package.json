@@ -48,6 +48,6 @@
   },
   "homepage": "https://github.com/WebReflection/uparser#readme",
   "dependencies": {
-    "domconstants": "^1.1.5"
+    "domconstants": "^1.1.6"
   }
 }
