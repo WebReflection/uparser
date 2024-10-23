@@ -1,4 +1,3 @@
-/*! (c) Andrea Giammarchi - ISC */
 import { VOID_ELEMENTS } from 'domconstants/re';
 
 const elements = /<([a-zA-Z0-9]+[a-zA-Z0-9:._-]*)([^>]*?)(\/?)>/g;

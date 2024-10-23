@@ -1,5 +1,4 @@
 'use strict';
-/*! (c) Andrea Giammarchi - ISC */
 const { VOID_ELEMENTS } = require('domconstants/re');
 
 const elements = /<([a-zA-Z0-9]+[a-zA-Z0-9:._-]*)([^>]*?)(\/?)>/g;
